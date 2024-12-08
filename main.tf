@@ -134,7 +134,8 @@ resource "aws_security_group" "allow_all" {
 
 
 resource "aws_instance" "public-server" {
-  count = length(var.public_cidr_block)
+  #count = length(var.public_cidr_block)
+  count = "${var.environment == "Prod" ? 3 : 1}"
   ami = "${lookup(var.amis, var.aws_region)}"
   instance_type = "t2.micro"
   key_name = var.key_name
@@ -163,7 +164,8 @@ resource "aws_instance" "public-server" {
 }
 
 resource "aws_instance" "private-server" {
-  count = length(var.private_cidr_block)
+  #count = length(var.private_cidr_block)
+  count = "${var.environment == "Prod" ? 3 : 1}"
   ami = "${lookup(var.amis, var.aws_region)}"
   instance_type = "t2.micro"
   key_name = var.key_name
